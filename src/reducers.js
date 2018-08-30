@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux'
 import {
+  REQUEST_AGGREGATIONS,
+  RECEIVE_AGGREGATIONS,
   SELECT_SUBREDDIT,
   INVALIDATE_SUBREDDIT,
   REQUEST_POSTS,
@@ -10,6 +12,32 @@ function selectedSubreddit(state = 'reactjs', action) {
   switch (action.type) {
     case SELECT_SUBREDDIT:
       return action.subreddit
+    default:
+      return state
+  }
+}
+
+function aggregations(
+  state = {
+    isFetching: false,
+    didInvalidate: false,
+    items: []
+  },
+  action
+) {
+  switch (action.type) {
+    case REQUEST_AGGREGATIONS:
+      return Object.assign({}, state, {
+        isFetching: true,
+        didInvalidate: false
+      })
+    case RECEIVE_AGGREGATIONS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        didInvalidate: false,
+        items: action.aggregations,
+        lastUpdated: action.receivedAt
+      })
     default:
       return state
   }
@@ -59,6 +87,7 @@ function postsBySubreddit(state = {}, action) {
 }
 
 const rootReducer = combineReducers({
+  aggregations,
   postsBySubreddit,
   selectedSubreddit
 })

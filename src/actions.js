@@ -1,5 +1,7 @@
 import fetch from 'cross-fetch'
 
+export const REQUEST_AGGREGATIONS = 'REQUEST_AGGREGATIONS'
+export const RECEIVE_AGGREGATIONS = 'RECEIVE_AGGREGATIONS'
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const SELECT_SUBREDDIT = 'SELECT_SUBREDDIT'
@@ -35,6 +37,20 @@ function receivePosts(subreddit, json) {
   }
 }
 
+function requestAggregations() {
+  return {
+    type: REQUEST_AGGREGATIONS
+  }
+}
+
+function receiveAggregations(json) {
+  return {
+    type: RECEIVE_AGGREGATIONS,
+    aggregations: json,
+    receivedAt: Date.now()
+  }
+}
+
 function fetchPosts(subreddit) {
   return dispatch => {
     dispatch(requestPosts(subreddit))
@@ -59,6 +75,32 @@ export function fetchPostsIfNeeded(subreddit) {
   return (dispatch, getState) => {
     if (shouldFetchPosts(getState(), subreddit)) {
       return dispatch(fetchPosts(subreddit))
+    }
+  }
+}
+
+function fetchAggregations() {
+  return dispatch => {
+    dispatch(requestAggregations())
+    return fetch('https://www.eossnapshots.io/data/eoscharge/latest.json')
+      .then(response => response.json())
+      .then(json => dispatch(receiveAggregations(json)))
+  }
+}
+
+function shouldFetchAggregations(state) {
+  const aggregations = state.aggregations
+  if (aggregations.isFetching) {
+    return false
+  } else {
+    return true
+  }  
+}
+
+export function fetchAggregationsIfNeeded() {
+  return (dispatch, getState) => {
+    if (shouldFetchAggregations(getState())) {
+      return dispatch(fetchAggregations())
     }
   }
 }
