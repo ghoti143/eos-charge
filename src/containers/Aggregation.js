@@ -14,7 +14,7 @@ class Aggregation extends Component {
       <div>
         {AggregationStore.aggregations.length > 0 &&          
           <div>
-            <Aggregations aggregations={AggregationStore.aggregations} />
+            <Aggregations aggregations={AggregationStore.topFive} />
           </div>
         }
       </div>

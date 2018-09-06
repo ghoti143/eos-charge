@@ -23,7 +23,7 @@ class Account extends Component {
         </form>
 
         {AccountStore.account !== null &&
-          <div>
+          <div class="resource-group">
             <Resource type="net" resource={AccountStore.account.net_limit} />
             <Resource type="cpu" resource={AccountStore.account.cpu_limit} />
           </div>

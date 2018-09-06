@@ -1,0 +1,10 @@
+.top_action {
+  border: 1px solid black;
+  float: left;
+  margin: 5px;
+}
+
+.top_action span {
+  display: block;
+  margin-bottom: 5px;
+}

@@ -1,36 +1,26 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import './Aggregations.css'
 
 export default class Aggregations extends Component {
   render() {
     return (
       
-      <table>
-        <thead>
-          <tr>
-            <td>account</td>
-            <td>name</td>
-            <td>avg_cpu_us</td>
-            <td>avg_net_words</td>
-            <td>count</td>
-          </tr>
-        </thead>
-        <tbody>
+      <div id="actions">
         {this.props.aggregations.map((agg, i) => (
-          <tr key={i}>
-            <td>{agg._id.acct}</td>
-            <td>{agg._id.name}</td>
-            <td>{agg.avg_cpu_us}</td>
-            <td>{agg.avg_net_words}</td>
-            <td>{agg.count}</td>
-          </tr>
+          <div class="top_action" key={i}>
+            <label>Account:</label>
+            <span>{agg._id.acct}</span>
+            <label>Name:</label>
+            <span>{agg._id.name}</span>
+            <label>Avg CPU:</label>
+            <span>{agg.avg_cpu_us}</span>
+            <label>Avg NET:</label>
+            <span>{agg.avg_net_words}</span>
+            <label>How many actions:</label>
+            <span>{agg.acct_num_actions}</span>
+          </div>
         ))}
-        </tbody>
-      </table>
+      </div>
     )
   }
-}
-
-Aggregations.propTypes = {
-  aggregations: PropTypes.array.isRequired
 }
