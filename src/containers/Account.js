@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Resource from '../components/Resource'
 import { inject, observer } from 'mobx-react'
+import './Account.css'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
@@ -21,7 +22,7 @@ class Account extends Component {
     return (
       <div>
         <form onSubmit={e => this.handleSubmit(e)}>
-          <TextField label="Account Name" placeholder="Enter Account Name" onChange={this.handleChange('acctName')} />
+          <TextField className="acct-name" label="Account Name" placeholder="Enter Account Name" onChange={this.handleChange('acctName')} />
           <Button variant="contained" type="submit">
             Lookup Account
           </Button>

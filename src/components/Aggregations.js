@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import './Aggregations.css'
-import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -13,26 +12,13 @@ import MessageIcon from '@material-ui/icons/Message';
 import FlashIcon from '@material-ui/icons/FlashOn';
 import CompareIcon from '@material-ui/icons/CompareArrows';
 
-const styles = {
-  card: {
-    maxWidth: 345,
-    float: 'left'
-  },
-  media: {
-    // ⚠️ object-fit is not supported by IE11.
-    objectFit: 'cover',
-  },
-};
-
-class Aggregations extends Component {
+export default class Aggregations extends Component {
   render() {
-    const {classes} = this.props
     return (
-      
-      <div id="actions">
+      <Grid container spacing={24}>
         {this.props.aggregations.map((agg, i) => (
-          <Card key={i} className={classes.card}>
-            <CardContent>
+          <Grid item xs={6} sm={4} md={3} lg={2}>
+            <Paper key={i} className="action-card">              
               <List>
                 <ListItem>
                   <Avatar>
@@ -65,12 +51,10 @@ class Aggregations extends Component {
                   <ListItemText primary="How many actions" secondary={agg.acct_num_actions} />
                 </ListItem>
               </List>
-            </CardContent>
-          </Card>
+            </Paper>
+          </Grid>
         ))}
-      </div>
+      </Grid>
     )
   }
 }
-
-export default withStyles(styles)(Aggregations)
