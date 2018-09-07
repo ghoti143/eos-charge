@@ -1,13 +1,19 @@
 import React, { Component } from 'react'
 import Resource from '../components/Resource'
-import { inject, observer } from "mobx-react"
+import { inject, observer } from 'mobx-react'
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 class Account extends Component {
   handleSubmit = e => {
     e.preventDefault()
-    const acctName = this.acctName.value
+    const acctName = this.acctName
     this.props.AccountStore.loadAccount(acctName)
   }  
+
+  handleChange = name => e => {
+    this[name] = e.target.value
+  }
 
   render() {
     const {AccountStore} = this.props
@@ -15,11 +21,10 @@ class Account extends Component {
     return (
       <div>
         <form onSubmit={e => this.handleSubmit(e)}>
-          <span>Account Name: </span>
-          <input type="text" placeholder="Account name" ref={input => this.acctName = input} />
-          <button>
+          <TextField label="Account Name" placeholder="Enter Account Name" onChange={this.handleChange('acctName')} />
+          <Button variant="contained" type="submit">
             Lookup Account
-          </button>
+          </Button>
         </form>
 
         {AccountStore.account !== null &&

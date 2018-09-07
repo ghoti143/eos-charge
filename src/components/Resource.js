@@ -4,7 +4,7 @@ import './Resource.css'
 export default class Resource extends Component {
   render() {
     return (
-      <div class="resource">
+      <div className="resource">
         <h3>{this.props.type}</h3>
         available: {this.props.resource.available}
         <br />
