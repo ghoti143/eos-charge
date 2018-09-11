@@ -4,6 +4,8 @@ import { inject, observer } from 'mobx-react'
 import './Account.css'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import FormLabel from '@material-ui/core/FormLabel';
 
 class Account extends Component {
   handleSubmit = e => {
@@ -26,10 +28,16 @@ class Account extends Component {
           <Button variant="contained" type="submit">
             Lookup Account
           </Button>
+          {AccountStore.accountLoading &&
+            <CircularProgress />
+          }
+          {AccountStore.accountError && 
+            <FormLabel error="true">{AccountStore.accountError.message}</FormLabel>
+          }
         </form>
 
         {AccountStore.account !== null &&
-          <div class="resource-group">
+          <div className="resource-group">
             <Resource type="net" resource={AccountStore.account.net_limit} />
             <Resource type="cpu" resource={AccountStore.account.cpu_limit} />
           </div>

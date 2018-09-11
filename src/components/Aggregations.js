@@ -17,8 +17,8 @@ export default class Aggregations extends Component {
     return (
       <Grid container spacing={24}>
         {this.props.aggregations.map((agg, i) => (
-          <Grid item xs={6} sm={4} md={3} lg={2}>
-            <Paper key={i} className="action-card">              
+          <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
+            <Paper className="action-card">              
               <List>
                 <ListItem>
                   <Avatar>
