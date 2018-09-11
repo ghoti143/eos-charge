@@ -2,19 +2,21 @@ import {observable, decorate} from 'mobx'
 
 class AccountStore {
   account = null
-  accountLoading = false
+  loading = false
   accountError = null
+  acctNameDirty = false
 
   loadAccount = name => {
-    this.accountLoading = true
-    this.accountError = null
+    this.loading = true
+    this.error = null
+    this.acctNameDirty = false
     
     fetch('https://api.eosnewyork.io/v1/chain/get_account', {
       method: 'post',
       body: JSON.stringify({'account_name': name})
     })
       .then(response => {
-        this.accountLoading = false
+        this.loading = false
         
         if (response.status === 500) {
           throw Error(`Account ${name} not found.`);
@@ -23,14 +25,15 @@ class AccountStore {
         return response.json()
       })
       .then(data => this.account = data)
-      .catch(error => this.accountError = error)
+      .catch(error => this.error = error)
   }
 }
 
 decorate(AccountStore, {
   account: observable,
-  accountLoading: observable,
-  accountError: observable
+  loading: observable,
+  error: observable,
+  acctNameDirty: observable
 })
 
 const store = new AccountStore()

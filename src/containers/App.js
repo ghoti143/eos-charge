@@ -26,7 +26,7 @@ export default class App extends Component {
           </Typography>
         </Toolbar>
       </AppBar>        
-        <Provider AccountStore={AccountStore}>
+        <Provider store={AccountStore}>
           <Account />
         </Provider>
         <hr />
