@@ -1,39 +1,53 @@
-import {observable, decorate} from 'mobx'
+import {observable, action, computed, decorate} from 'mobx'
 
 class AccountStore {
   account = null
-  loading = false
-  accountError = null
-  acctNameDirty = false
+  state = 'init'
+  error = null
+  accountName = null
+  
+  setAccountName = name => {
+    this.accountName = name
+    this.state = 'init'
+  }
+
+  setAccount = data => {
+    this.account = data
+    this.state = 'done'
+  }
+
+  handleError = error => {
+    this.error = error
+    this.state = 'error'
+    this.account = null
+  }
 
   loadAccount = name => {
-    this.loading = true
-    this.error = null
-    this.acctNameDirty = false
+    this.state = 'pending'
     
     fetch('https://api.eosnewyork.io/v1/chain/get_account', {
       method: 'post',
-      body: JSON.stringify({'account_name': name})
+      body: JSON.stringify({'account_name': this.accountName})
     })
       .then(response => {
-        this.loading = false
-        
+
         if (response.status === 500) {
-          throw Error(`Account ${name} not found.`);
+          throw Error(`Account ${this.accountName} not found.`);
         }
         
         return response.json()
       })
-      .then(data => this.account = data)
-      .catch(error => this.error = error)
+      .then(this.setAccount)
+      .catch(this.handleError)
   }
 }
 
 decorate(AccountStore, {
   account: observable,
-  loading: observable,
+  state: observable,
   error: observable,
-  acctNameDirty: observable
+  accountName: observable,
+  setAccountName: action
 })
 
 const store = new AccountStore()
