@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import Resource from '../components/Resource'
+import Battery from '../components/Battery'
 import { inject, observer } from 'mobx-react'
 import withStyles from '@material-ui/core/styles/withStyles';
+import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -51,8 +52,11 @@ const styles = theme => ({
   form: {
     display: 'flex',
     justifyContent: 'space-around'
+  },
+  batteryRoot: {
+    flexGrow: 1
   }
-});
+})
 
 class Account extends Component {
   handleSubmit = e => {
@@ -66,7 +70,7 @@ class Account extends Component {
 
   render() {
     const {store} = this.props
-    const { classes } = this.props
+    const {classes} = this.props
 
     return (
       <div>
@@ -99,14 +103,18 @@ class Account extends Component {
               {store.state === 'error' && 
                   <FormLabel error="true">{store.error.message}</FormLabel>}
             </form>
+
+            {store.account &&
+              <Grid container className={classes.batteryRoot} spacing={16}>
+                <Grid item xs={6}>
+                  <Battery type="net" resource={store.account.net_limit} />
+                </Grid>
+                <Grid item xs={6}>
+                  <Battery type="cpu" resource={store.account.cpu_limit} />
+                </Grid>
+              </Grid>}
           </Paper>
         </main>
-
-        {store.account &&
-          <div className="resource-group">
-            <Resource type="net" resource={store.account.net_limit} />
-            <Resource type="cpu" resource={store.account.cpu_limit} />
-          </div>}
       </div>
     )
   }

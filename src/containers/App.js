@@ -2,25 +2,33 @@ import React, { Component } from 'react'
 import Account from './Account'
 import Aggregation from './Aggregation'
 import { Provider } from "mobx-react";
+import withStyles from '@material-ui/core/styles/withStyles';
 import AccountStore from "../stores/AccountStore";
 import AggregationStore from "../stores/AggregationStore";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import OfflineBoltIcon from '@material-ui/icons/OfflineBolt';
 
-export default class App extends Component {
+const styles = theme => ({
+  icon: {
+    marginRight: theme.spacing.unit * 3,
+    width: 40,
+    height: 40
+  }
+});
+
+class App extends Component {
   render() {
+    const {classes} = this.props
+    
     return (
       <React.Fragment>
         <CssBaseline />
         <AppBar position="static">
         <Toolbar>
-          <IconButton color="inherit" aria-label="Menu">
-            <MenuIcon />
-          </IconButton>
+          <OfflineBoltIcon className={classes.icon} />
           <Typography variant="title" color="inherit">
             EOS Charge
           </Typography>
@@ -37,3 +45,5 @@ export default class App extends Component {
     )
   }
 }
+
+export default withStyles(styles)(App)

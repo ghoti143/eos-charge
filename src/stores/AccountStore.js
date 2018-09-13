@@ -1,7 +1,10 @@
-import {observable, action, computed, decorate} from 'mobx'
+import {observable, action, decorate} from 'mobx'
 
 class AccountStore {
-  account = null
+  account = {
+    net_limit: {used: 100, available: 0, max: 100},
+    cpu_limit: {used: 100, available: 0, max: 100}
+  }
   state = 'init'
   error = null
   accountName = null
