@@ -1,10 +1,12 @@
 import {observable, action, decorate} from 'mobx'
 
+const defaultAccount = {
+  net_limit: {used: 100, available: 0, max: 100},
+  cpu_limit: {used: 100, available: 0, max: 100}
+}
+
 class AccountStore {
-  account = {
-    net_limit: {used: 100, available: 0, max: 100},
-    cpu_limit: {used: 100, available: 0, max: 100}
-  }
+  account = defaultAccount
   state = 'init'
   error = null
   accountName = null
@@ -22,7 +24,7 @@ class AccountStore {
   handleError = error => {
     this.error = error
     this.state = 'error'
-    this.account = null
+    this.account = defaultAccount
   }
 
   loadAccount = name => {

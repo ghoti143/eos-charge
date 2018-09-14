@@ -22,7 +22,7 @@ class AggregationStore {
     })
     topFive.sort((a, b) => { return b.count - a.count })
 
-    topFive = topFive.slice(0, 5)
+    //topFive = topFive.slice(0, 5)
 
     topFive.forEach(agg => {
       agg.acct_num_actions = this.calcActions(agg.avg_cpu_us)

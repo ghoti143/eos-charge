@@ -41,7 +41,9 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
   },
   buttonWrapper: {
-    position: 'relative'
+    position: 'relative',
+    marginLeft: theme.spacing.unit * 4
+
   },  
   buttonProgress: {
     position: 'absolute',
@@ -50,11 +52,16 @@ const styles = theme => ({
     zIndex: 1
   },
   form: {
+    marginLeft: theme.spacing.unit * 4,
+    marginRight: theme.spacing.unit * 4
+  },
+  formInputs: {
     display: 'flex',
     justifyContent: 'space-around'
   },
   batteryRoot: {
-    flexGrow: 1
+    flexGrow: 1,
+    marginTop: theme.spacing.unit * 3
   }
 })
 
@@ -77,8 +84,8 @@ class Account extends Component {
         <main className={classes.layout}>
           <Paper className={classes.paper}>
             <Typography variant="display1" align="center">Check Your Charge</Typography>
-            <form className="acct_form" onSubmit={e => this.handleSubmit(e)}>
-              <div className={classes.form}>
+            <form className={classes.form} onSubmit={e => this.handleSubmit(e)}>
+              <div className={classes.formInputs}>
                 <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="acct_name">EOS Account Name</InputLabel>
                   <Input id="acct_name" 
@@ -92,7 +99,7 @@ class Account extends Component {
                           color="primary" 
                           type="submit" 
                           disabled={store.state === 'pending' || store.state === 'error'}>
-                    {store.state === 'init' ? <SearchIcon /> :
+                    {store.state === 'init' || store.state === 'pending' ? <SearchIcon /> :
                      store.state === 'error' ? <PriorityHighIcon /> :                     
                      <CheckIcon />}
                   </Button>
