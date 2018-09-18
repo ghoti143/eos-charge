@@ -1,14 +1,19 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import Typography from '@material-ui/core/Typography'
 import withStyles from '@material-ui/core/styles/withStyles'
 
 const styles = theme => ({
   batteryContainer: {
-    position: 'relative'
+    position: 'relative',
+    height: 230,
+    textAlign: 'center'
   },
-  percentLabel: {
+  graphic: {
+    height: 230
+  },
+  pctLabel: {
     position: 'absolute',
-    top: '50%',
+    top: '40%',
     width: '100%',
     color: 'white',
     textShadow: '1px 1px 5px rgba(0, 0, 0, 0.5)'
@@ -35,23 +40,36 @@ class Battery extends Component {
     return `M7 ${var1}v${var2}C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V${var1}H7z`
   }
 
+  formatQuantity = (resource, type) => {
+    if(type === 'cpu') {
+      return resource.available.toLocaleString() + ' µs'
+    } 
+    else if(type === 'net') {
+      return Math.round(resource.available / 1024).toLocaleString() + ' KB'
+    }
+  }
+
   render() {
-    const {classes} = this.props
-    let pct = this.calculatePercent(this.props.resource)
-    let svgPath = this.createSvgPath(pct)
+    const {classes, resource, type} = this.props
+    const pct = this.calculatePercent(resource)
+    const svgPath = this.createSvgPath(pct)
+    const qty = this.formatQuantity(resource, type)
+
     let color = pct > 20 ? 'green' : 'red'
 
     return (
       <React.Fragment>
         <Typography variant="headline" align="center">{this.props.type.toUpperCase()}</Typography>
-        <div className={classes.batteryContainer}>
-          <svg focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-            <path fill-opacity="0.3" d="M17 5.33C17 4.6 16.4 4 15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33V20.5h10V5.33z"></path>
+        <div className={classes.batteryContainer} align="center">
+          <svg focusable="false" viewBox="0 0 24 24" className={classes.graphic}>
+            <path fillOpacity="0.3" d="M17 5.33C17 4.6 16.4 4 15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33V20.5h10V5.33z"></path>
             <path d={svgPath} fill={color}></path>
-            <path fill="none" d="M0 0h24v24H0z"></path>
+            <path fill="none" d="M0 0h24v24H0z"></path>            
           </svg>
-          <Typography className={classes.percentLabel} variant="display1" align="center">{`${pct}%`}</Typography>
+          
+          <Typography className={classes.pctLabel} variant="display1" align="center">{`${pct}%`}</Typography>
         </div>
+        <Typography variant="subheading" align="center">{`${qty}`}</Typography>
       </React.Fragment>
     )
   }

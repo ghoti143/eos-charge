@@ -16,26 +16,24 @@ class AggregationStore {
     this.aggregations = aggregations
   }
 
-  get topFive() {
-    let topFive = this.aggregations.filter(agg => {
-      return this.blacklist.indexOf(agg._id.acct) === -1
+  get sortedList() {
+    let sortedList = this.aggregations.filter(agg => {
+      return !this.blacklist.includes(agg._id.acct)
     })
-    topFive.sort((a, b) => { return b.count - a.count })
+    sortedList.sort((a, b) => { return b.count - a.count })
 
-    //topFive = topFive.slice(0, 5)
-
-    topFive.forEach(agg => {
+    sortedList.forEach(agg => {
       agg.acct_num_actions = this.calcActions(agg.avg_cpu_us)
     })
     
-    return topFive
+    return sortedList
   }
 
   calcActions = cpu => {
     if(AccountStore.account) {
       return AccountStore.account.cpu_limit.available / cpu
     } else {
-      return -1
+      return 0
     }
   }
 }
@@ -43,7 +41,7 @@ class AggregationStore {
 decorate(AggregationStore, {
   aggregations: observable,
   setAggregations: action,
-  topFive: computed
+  sortedList: computed
 })
 
 const store = new AggregationStore()

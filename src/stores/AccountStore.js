@@ -12,7 +12,7 @@ class AccountStore {
   accountName = null
   
   setAccountName = name => {
-    this.accountName = name
+    this.accountName = name.trim()
     this.state = 'init'
   }
 

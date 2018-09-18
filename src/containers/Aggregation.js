@@ -1,25 +1,30 @@
-import React, { Component } from 'react'
-import Aggregations from '../components/Aggregations'
-import { inject, observer } from "mobx-react"
+import React, {Component} from 'react'
+import Action from '../components/Action'
+import Grid from '@material-ui/core/Grid';
+import {inject, observer} from 'mobx-react'
 
 class Aggregation extends Component {
   componentDidMount() {
-    this.props.AggregationStore.loadAggregations()    
+    this.props.store.loadAggregations()    
   }
 
   render() {
-    const {AggregationStore} = this.props
+    const {store} = this.props
     
     return (
-      <div>
-        {AggregationStore.aggregations.length > 0 &&          
-          <div>
-            <Aggregations aggregations={AggregationStore.topFive} />
-          </div>
+      <React.Fragment>
+        {store.aggregations.length > 0 &&          
+          <Grid container spacing={24}>
+            {store.sortedList.map((action, i) => (
+              <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
+                <Action action={action} />
+              </Grid>
+            ))}
+          </Grid>
         }
-      </div>
+      </React.Fragment>
     )
   }
 }
 
-export default inject('AggregationStore')(observer(Aggregation))
+export default inject('store')(observer(Aggregation))

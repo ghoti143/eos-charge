@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import Battery from '../components/Battery'
-import { inject, observer } from 'mobx-react'
+import {inject, observer} from 'mobx-react'
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
