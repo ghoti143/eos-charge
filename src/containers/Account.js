@@ -7,7 +7,6 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FormLabel from '@material-ui/core/FormLabel';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -17,21 +16,26 @@ import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
 
 const styles = theme => ({
   layout: {
-    width: 'auto',
-    marginLeft: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 2,
-    [theme.breakpoints.up(600 + theme.spacing.unit * 2 * 2)]: {
-      width: 600,
+    marginLeft: theme.spacing.unit * 2,
+    width: 'auto',
+    
+    [theme.breakpoints.up('md')]: {
+      marginRight: 0
+    },
+    
+    [theme.breakpoints.only('sm')]: {
+      width: 500,
       marginLeft: 'auto',
       marginRight: 'auto',
     },
   },
   paper: {
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing.unit * 2,
     marginBottom: theme.spacing.unit * 3,
     padding: theme.spacing.unit * 2,
-    [theme.breakpoints.up(600 + theme.spacing.unit * 3 * 2)]: {
-      marginTop: theme.spacing.unit * 6,
+    [theme.breakpoints.up('md')]: {
+      marginTop: theme.spacing.unit * 2,
       marginBottom: theme.spacing.unit * 6,
       padding: theme.spacing.unit * 3,
     },
@@ -72,6 +76,7 @@ class Account extends Component {
   }  
 
   handleChange = name => e => {
+    e.target.value = e.target.value.toLowerCase()
     this.props.store.setAccountName(e.target.value)
   }
 
@@ -83,10 +88,9 @@ class Account extends Component {
       <div>
         <main className={classes.layout}>
           <Paper className={classes.paper}>
-            <Typography variant="display1" align="center">Check Your Charge</Typography>
             <form className={classes.form} onSubmit={e => this.handleSubmit(e)}>
               <div className={classes.formInputs}>
-                <FormControl margin="normal" required fullWidth>
+                <FormControl margin="none" required fullWidth>
                   <InputLabel htmlFor="acct_name">EOS Account Name</InputLabel>
                   <Input id="acct_name" 
                         name="acct_name" 
@@ -112,7 +116,7 @@ class Account extends Component {
             </form>
 
             {store.account &&
-              <Grid container className={classes.batteryRoot} spacing={16}>
+              <Grid container className={classes.batteryRoot}>
                 <Grid item xs={6}>
                   <Battery type="net" resource={store.account.net_limit} />
                 </Grid>

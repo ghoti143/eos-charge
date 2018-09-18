@@ -11,24 +11,31 @@ class AccountStore {
   error = null
   accountName = null
   
+  setState = state => {
+    this.state = state
+  }
+
   setAccountName = name => {
     this.accountName = name.trim()
-    this.state = 'init'
+    this.setState('init')
   }
 
   setAccount = data => {
     this.account = data
-    this.state = 'done'
+  }
+
+  setError = error => {
+    this.error = error
   }
 
   handleError = error => {
-    this.error = error
-    this.state = 'error'
-    this.account = defaultAccount
+    this.setError(error)
+    this.setState('error')
+    this.setAccount(defaultAccount)
   }
 
   loadAccount = name => {
-    this.state = 'pending'
+    this.setState('pending')
     
     fetch('https://api.eosnewyork.io/v1/chain/get_account', {
       method: 'post',
@@ -43,6 +50,7 @@ class AccountStore {
         return response.json()
       })
       .then(this.setAccount)
+      .then(() => {this.setState('done')})
       .catch(this.handleError)
   }
 }
@@ -52,7 +60,10 @@ decorate(AccountStore, {
   state: observable,
   error: observable,
   accountName: observable,
-  setAccountName: action
+  setAccountName: action,
+  setState: action,
+  setError: action,
+  setAccount: action,
 })
 
 const store = new AccountStore()

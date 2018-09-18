@@ -5,18 +5,21 @@ import withStyles from '@material-ui/core/styles/withStyles'
 const styles = theme => ({
   batteryContainer: {
     position: 'relative',
-    height: 230,
+    width: '100%',
     textAlign: 'center'
   },
   graphic: {
-    height: 230
+    width: '100%'
   },
   pctLabel: {
     position: 'absolute',
     top: '40%',
     width: '100%',
     color: 'white',
-    textShadow: '1px 1px 5px rgba(0, 0, 0, 0.5)'
+    textShadow: '1px 1px 5px rgba(0, 0, 0, 0.5)',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '1.6rem'
+    }
   }
 })
 

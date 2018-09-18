@@ -13,8 +13,8 @@ class Aggregation extends Component {
     
     return (
       <React.Fragment>
-        {store.aggregations.length > 0 &&          
-          <Grid container spacing={24}>
+        {store.aggregations.length > 0 &&
+          <Grid container>
             {store.sortedList.map((action, i) => (
               <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
                 <Action action={action} />

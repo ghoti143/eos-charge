@@ -29,6 +29,21 @@ class AggregationStore {
     return sortedList
   }
 
+  get popularActions() {
+    let sortedList = this.aggregations.filter(agg => {
+      return !this.blacklist.includes(agg._id.acct)
+    })
+    sortedList.sort((a, b) => { return b.count - a.count })
+
+    sortedList = sortedList.slice(0, 3)
+
+    sortedList.forEach(agg => {
+      agg.acct_num_actions = this.calcActions(agg.avg_cpu_us)
+    })
+    
+    return sortedList
+  }
+
   calcActions = cpu => {
     if(AccountStore.account) {
       return AccountStore.account.cpu_limit.available / cpu
