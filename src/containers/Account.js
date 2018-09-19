@@ -16,12 +16,12 @@ import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
 
 const styles = theme => ({
   layout: {
-    marginRight: theme.spacing.unit * 2,
-    marginLeft: theme.spacing.unit * 2,
+    //marginRight: theme.spacing.unit * 2,
+    //marginLeft: theme.spacing.unit / 2,
     width: 'auto',
     
     [theme.breakpoints.up('md')]: {
-      marginRight: 0
+      //marginRight: 0
     },
     
     [theme.breakpoints.only('sm')]: {

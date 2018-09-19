@@ -20,8 +20,8 @@ const styles = theme => ({
     width: 40,
     height: 40
   },
-  layout: {
-    marginTop: theme.spacing.unit * 2    
+  header: {
+    marginBottom: theme.spacing.unit * 2    
   }  
 });
 
@@ -39,8 +39,9 @@ class App extends Component {
               EOS Charge
             </Typography>
           </Toolbar>
-        </AppBar>    
-        <Grid container className={classes.layout} spacing={16}>
+        </AppBar>
+        <div style={{ padding: 16 }}>
+        <Grid container spacing={16}>
           <Grid item xs={12} sm={12} md={6} lg={5}>
             <Typography variant="display1" align="center">Check Your Charge</Typography>
             <Provider store={AccountStore}>
@@ -60,6 +61,7 @@ class App extends Component {
             </Provider>
           </Grid>
         </Grid>        
+        </div>
       </React.Fragment>
     )
   }

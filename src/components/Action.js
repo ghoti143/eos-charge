@@ -14,8 +14,7 @@ import withStyles from '@material-ui/core/styles/withStyles'
 const styles = theme => ({
   paper: {
     maxWidth: 320,
-    overflow: 'hidden',
-    margin: theme.spacing.unit
+    overflow: 'hidden'
   }
 })
 
