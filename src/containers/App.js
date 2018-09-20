@@ -4,7 +4,6 @@ import AllActions from './AllActions'
 import PopularActions from './PopularActions'
 import {Provider} from "mobx-react";
 import withStyles from '@material-ui/core/styles/withStyles';
-import AccountStore from "../stores/AccountStore";
 import ActionStore from "../stores/ActionStore";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -12,7 +11,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import OfflineBoltIcon from '@material-ui/icons/OfflineBolt';
 import Grid from '@material-ui/core/Grid';
-
 
 const styles = theme => ({
   icon: {
@@ -22,7 +20,10 @@ const styles = theme => ({
   },
   header: {
     marginBottom: theme.spacing.unit * 2    
-  }  
+  },
+  gridWrapper: {
+    padding: 16
+  }
 });
 
 class App extends Component {
@@ -40,27 +41,25 @@ class App extends Component {
             </Typography>
           </Toolbar>
         </AppBar>
-        <div style={{ padding: 16 }}>
-        <Grid container spacing={16}>
-          <Grid item xs={12} sm={12} md={6} lg={5}>
-            <Typography variant="display1" align="center">Check Your Charge</Typography>
-            <Provider store={AccountStore}>
-              <Account />
-            </Provider>
-          </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={7}>
-            <Typography variant="display1" align="center">Popular Action Cost</Typography>
-            <Provider store={ActionStore}>
-              <PopularActions />
-            </Provider>            
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant="display1" align="center">More Actions</Typography>
-            <Provider store={ActionStore}>
-              <AllActions />
-            </Provider>
-          </Grid>
-        </Grid>        
+        <div className={classes.gridWrapper}>
+          <Grid container spacing={16}>
+            <Grid item xs={12} sm={12} md={6} lg={5}>
+              <Typography variant="display1" align="center">Check Your Charge</Typography>
+              <Account />            
+            </Grid>
+            <Grid item xs={12} sm={12} md={6} lg={7}>
+              <Typography variant="display1" align="center">Popular Action Cost</Typography>
+              <Provider store={ActionStore}>
+                <PopularActions />
+              </Provider>            
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="display1" align="center">More Actions</Typography>
+              <Provider store={ActionStore}>
+                <AllActions />
+              </Provider>
+            </Grid>
+          </Grid>        
         </div>
       </React.Fragment>
     )

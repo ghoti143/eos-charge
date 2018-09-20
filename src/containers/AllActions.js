@@ -8,6 +8,10 @@ class AllActions extends Component {
     this.props.store.loadAggregations()    
   }
 
+  componentWillReact() {
+    console.log("AllActions will rerender")
+  }
+
   render() {
     const {store} = this.props
     

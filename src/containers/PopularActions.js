@@ -17,6 +17,10 @@ const styles = theme => ({
 })
 
 class PopularActions extends Component {
+  componentWillReact() {
+    console.log("PopularActions will rerender")
+  }
+
   render() {
     const {classes, store} = this.props
 
@@ -25,7 +29,7 @@ class PopularActions extends Component {
         {store.aggregations.length > 0 &&
           <React.Fragment>
             {store.popularActions.map((action, i) => (
-              <Paper className={classes.paper}>Item {i}</Paper>
+              <Paper key={i} className={classes.paper}>Item {i}</Paper>
             ))}
           </React.Fragment>}
       </React.Fragment>

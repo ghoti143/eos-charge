@@ -53,8 +53,8 @@ class Battery extends Component {
     const qty = Utils.formatQuantity(resource.available, type)
 
     let color = pct > 20 ? 'green' : 'red'
-
-    return (
+    console.log('battery rendering')
+    return ( 
       <React.Fragment>
         <Typography variant="headline" align="center">{this.props.type.toUpperCase()}</Typography>
         <div className={classes.batteryContainer} align="center">
