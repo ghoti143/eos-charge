@@ -2,7 +2,8 @@ import {observable, action, decorate, computed} from 'mobx'
 import AccountStore from './AccountStore'
 
 class ActionStore {
-  aggregations = [];
+  aggregations = []
+  isLoaded = false
   blacklist = ['blocktwitter', 'eosio.token']
 
   loadAggregations = name => {
@@ -14,6 +15,7 @@ class ActionStore {
 
   setAggregations = aggregations => {
     this.aggregations = aggregations
+    this.isLoaded = true;
   }
 
   get sortedList() {
@@ -54,7 +56,7 @@ class ActionStore {
 }
 
 decorate(ActionStore, {
-  aggregations: observable,
+  isLoaded: observable,
   setAggregations: action,
   sortedList: computed
 })

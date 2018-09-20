@@ -26,7 +26,7 @@ class PopularActions extends Component {
 
     return (
       <React.Fragment>
-        {store.aggregations.length > 0 &&
+        {store.isLoaded &&
           <React.Fragment>
             {store.popularActions.map((action, i) => (
               <Paper key={i} className={classes.paper}>Item {i}</Paper>

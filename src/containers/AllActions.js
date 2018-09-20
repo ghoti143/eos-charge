@@ -17,7 +17,7 @@ class AllActions extends Component {
     
     return (
       <React.Fragment>
-        {store.aggregations.length > 0 &&
+        {store.isLoaded &&
           <Grid container spacing={16}>
             {store.sortedList.map((action, i) => (
               <Grid key={i} item xs={6} sm={4} md={3} lg={2}>
