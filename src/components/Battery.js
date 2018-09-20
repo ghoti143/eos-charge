@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Typography from '@material-ui/core/Typography'
 import withStyles from '@material-ui/core/styles/withStyles'
+import Utils from './Utils'
 
 const styles = theme => ({
   batteryContainer: {
@@ -43,20 +44,13 @@ class Battery extends Component {
     return `M7 ${var1}v${var2}C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V${var1}H7z`
   }
 
-  formatQuantity = (resource, type) => {
-    if(type === 'cpu') {
-      return resource.available.toLocaleString() + ' µs'
-    } 
-    else if(type === 'net') {
-      return Math.round(resource.available / 1024).toLocaleString() + ' KB'
-    }
-  }
+  
 
   render() {
     const {classes, resource, type} = this.props
     const pct = this.calculatePercent(resource)
     const svgPath = this.createSvgPath(pct)
-    const qty = this.formatQuantity(resource, type)
+    const qty = Utils.formatQuantity(resource.available, type)
 
     let color = pct > 20 ? 'green' : 'red'
 

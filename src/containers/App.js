@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import Account from './Account'
-import Aggregation from './Aggregation'
+import AllActions from './AllActions'
 import PopularActions from './PopularActions'
 import {Provider} from "mobx-react";
 import withStyles from '@material-ui/core/styles/withStyles';
 import AccountStore from "../stores/AccountStore";
-import AggregationStore from "../stores/AggregationStore";
+import ActionStore from "../stores/ActionStore";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -50,14 +50,14 @@ class App extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={7}>
             <Typography variant="display1" align="center">Popular Action Cost</Typography>
-            <Provider store={AggregationStore}>
+            <Provider store={ActionStore}>
               <PopularActions />
             </Provider>            
           </Grid>
           <Grid item xs={12}>
             <Typography variant="display1" align="center">More Actions</Typography>
-            <Provider store={AggregationStore}>
-              <Aggregation />
+            <Provider store={ActionStore}>
+              <AllActions />
             </Provider>
           </Grid>
         </Grid>        

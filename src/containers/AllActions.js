@@ -3,7 +3,7 @@ import Action from '../components/Action'
 import Grid from '@material-ui/core/Grid';
 import {inject, observer} from 'mobx-react'
 
-class Aggregation extends Component {
+class AllActions extends Component {
   componentDidMount() {
     this.props.store.loadAggregations()    
   }
@@ -27,4 +27,4 @@ class Aggregation extends Component {
   }
 }
 
-export default inject('store')(observer(Aggregation))
+export default inject('store')(observer(AllActions))

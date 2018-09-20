@@ -1,7 +1,7 @@
 import {observable, action, decorate, computed} from 'mobx'
 import AccountStore from './AccountStore'
 
-class AggregationStore {
+class ActionStore {
   aggregations = [];
   blacklist = ['blocktwitter', 'eosio.token']
 
@@ -53,11 +53,11 @@ class AggregationStore {
   }
 }
 
-decorate(AggregationStore, {
+decorate(ActionStore, {
   aggregations: observable,
   setAggregations: action,
   sortedList: computed
 })
 
-const store = new AggregationStore()
+const store = new ActionStore()
 export default store

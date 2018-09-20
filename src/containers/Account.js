@@ -76,7 +76,6 @@ class Account extends Component {
   }  
 
   handleChange = name => e => {
-    e.target.value = e.target.value.toLowerCase()
     this.props.store.setAccountName(e.target.value)
   }
 
@@ -95,6 +94,7 @@ class Account extends Component {
                   <Input id="acct_name" 
                         name="acct_name" 
                         placeholder="Ex: eosnewyorkio" 
+                        value={store.accountName}
                         autoFocus 
                         onChange={this.handleChange('acctName')} />
                 </FormControl>

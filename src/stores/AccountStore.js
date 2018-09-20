@@ -1,4 +1,7 @@
 import {observable, action, decorate} from 'mobx'
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 const defaultAccount = {
   net_limit: {used: 100, available: 0, max: 100},
@@ -6,22 +9,30 @@ const defaultAccount = {
 }
 
 class AccountStore {
-  account = defaultAccount
-  state = 'init'
-  error = null
-  accountName = null
   
+  constructor() {
+    this.account = defaultAccount
+    this.state = 'init'
+    this.error = null
+    this.accountName = cookies.get('account-name')
+
+    if(this.accountName != null) {
+      this.loadAccount()
+    }
+  }
+
   setState = state => {
     this.state = state
   }
 
   setAccountName = name => {
-    this.accountName = name.trim()
+    this.accountName = name.trim().toLowerCase()
     this.setState('init')
   }
 
   setAccount = data => {
     this.account = data
+    cookies.set('account-name', this.accountName, { path: '/' })
   }
 
   setError = error => {
@@ -32,6 +43,7 @@ class AccountStore {
     this.setError(error)
     this.setState('error')
     this.setAccount(defaultAccount)
+    cookies.remove('account-name')
   }
 
   loadAccount = name => {

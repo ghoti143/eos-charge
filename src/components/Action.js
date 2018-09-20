@@ -10,6 +10,7 @@ import MessageIcon from '@material-ui/icons/Message';
 import FlashIcon from '@material-ui/icons/FlashOn';
 import CompareIcon from '@material-ui/icons/CompareArrows';
 import withStyles from '@material-ui/core/styles/withStyles'
+import Utils from './Utils'
 
 const styles = theme => ({
   paper: {
@@ -21,6 +22,9 @@ const styles = theme => ({
 class Action extends Component {
   render() {
     const {classes, action} = this.props
+    const cpu = Utils.formatQuantity(action.avg_cpu_us, 'cpu')
+    const net = Utils.formatQuantity(action.avg_net_words, 'words')
+
 
     return (
       <Paper className={classes.paper}>              
@@ -41,13 +45,13 @@ class Action extends Component {
             <Avatar>
               <FlashIcon />
             </Avatar>
-            <ListItemText primary="Avg CPU" secondary={action.avg_cpu_us} />
+            <ListItemText primary="Avg CPU" secondary={cpu} />
           </ListItem>
           <ListItem>
             <Avatar>
               <CompareIcon />
             </Avatar>
-            <ListItemText primary="Avg NET" secondary={action.avg_net_words} />
+            <ListItemText primary="Avg NET" secondary={net} />
           </ListItem>
           <ListItem>
             <Avatar>
