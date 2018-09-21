@@ -1,64 +1,41 @@
 import {observable, action, decorate, computed} from 'mobx'
-import AccountStore from './AccountStore'
 
 class ActionStore {
-  aggregations = []
+  actions = []
   isLoaded = false
   blacklist = ['blocktwitter', 'eosio.token']
 
-  loadAggregations = name => {
+  loadActions = name => {
     const cachebust = (new Date()).getTime()
     fetch(`https://www.eossnapshots.io/data/eoscharge/latest.json?ts=${cachebust}`)
       .then(response => response.json())
-      .then(data => this.setAggregations(data))    
+      .then(data => this.setActions(data))    
   }
 
-  setAggregations = aggregations => {
-    this.aggregations = aggregations
+  setActions = actions => {
+    this.actions = actions.filter(agg => {
+      return !this.blacklist.includes(agg._id.acct)
+    })
+    this.actions = this.actions.slice().sort((a, b) => { return b.count - a.count })
     this.isLoaded = true;
   }
 
   get sortedList() {
-    let sortedList = this.aggregations.filter(agg => {
-      return !this.blacklist.includes(agg._id.acct)
-    })
-    sortedList.sort((a, b) => { return b.count - a.count })
-
-    sortedList.forEach(agg => {
-      agg.acct_num_actions = this.calcActions(agg.avg_cpu_us)
-    })
-    
-    return sortedList
+    return this.actions
   }
 
   get popularActions() {
-    let sortedList = this.aggregations.filter(agg => {
-      return !this.blacklist.includes(agg._id.acct)
-    })
-    sortedList.sort((a, b) => { return b.count - a.count })
-
-    sortedList = sortedList.slice(0, 3)
-
-    sortedList.forEach(agg => {
-      agg.acct_num_actions = this.calcActions(agg.avg_cpu_us)
-    })
-    
-    return sortedList
-  }
-
-  calcActions = cpu => {
-    if(AccountStore.account) {
-      return AccountStore.account.cpu_limit.available / cpu
-    } else {
-      return 0
-    }
+    const popularActions = this.actions.slice(0, 3)
+    return popularActions
   }
 }
 
 decorate(ActionStore, {
   isLoaded: observable,
-  setAggregations: action,
-  sortedList: computed
+  setActions: action,
+  sortedList: computed,
+  popularActions: computed,
+  actions: observable
 })
 
 const store = new ActionStore()

@@ -22,13 +22,13 @@ class PopularActions extends Component {
   }
 
   render() {
-    const {classes, store} = this.props
+    const {classes, actionStore} = this.props
 
     return (
       <React.Fragment>
-        {store.isLoaded &&
+        {actionStore.isLoaded &&
           <React.Fragment>
-            {store.popularActions.map((action, i) => (
+            {actionStore.popularActions.map((action, i) => (
               <Paper key={i} className={classes.paper}>Item {i}</Paper>
             ))}
           </React.Fragment>}
@@ -37,4 +37,4 @@ class PopularActions extends Component {
   }
 }
 
-export default inject('store')(withStyles(styles)(observer(PopularActions)))
+export default inject('actionStore', 'acctStore')(withStyles(styles)(observer(PopularActions)))

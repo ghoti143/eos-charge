@@ -11,6 +11,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import OfflineBoltIcon from '@material-ui/icons/OfflineBolt';
 import Grid from '@material-ui/core/Grid';
+import AccountStore from "../stores/AccountStore";
 
 const styles = theme => ({
   icon: {
@@ -49,13 +50,13 @@ class App extends Component {
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={7}>
               <Typography variant="display1" align="center">Popular Action Cost</Typography>
-              <Provider store={ActionStore}>
+              <Provider actionStore={ActionStore} acctStore={AccountStore}>
                 <PopularActions />
               </Provider>            
             </Grid>
             <Grid item xs={12}>
               <Typography variant="display1" align="center">More Actions</Typography>
-              <Provider store={ActionStore}>
+              <Provider actionStore={ActionStore} acctStore={AccountStore}>
                 <AllActions />
               </Provider>
             </Grid>

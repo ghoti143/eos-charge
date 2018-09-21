@@ -44,7 +44,9 @@ class Battery extends Component {
     return `M7 ${var1}v${var2}C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V${var1}H7z`
   }
 
-  
+  shouldComponentUpdate(nextProps) {
+    return (nextProps.resource !== this.props.resource)
+  }
 
   render() {
     const {classes, resource, type} = this.props

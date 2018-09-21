@@ -20,11 +20,16 @@ const styles = theme => ({
 })
 
 class Action extends Component {
+  shouldComponentUpdate(nextProps) {
+    return (nextProps.action !== this.props.action || 
+            nextProps.availCpu !== this.props.availCpu)
+  }
+
   render() {
-    const {classes, action} = this.props
+    const {classes, action, availCpu} = this.props
     const cpu = Utils.formatQuantity(action.avg_cpu_us, 'cpu')
     const net = Utils.formatQuantity(action.avg_net_words, 'words')
-
+    const numActions = availCpu / action.avg_cpu_us
 
     return (
       <Paper className={classes.paper}>              
@@ -57,7 +62,7 @@ class Action extends Component {
             <Avatar>
               <RepeatIcon />
             </Avatar>
-            <ListItemText primary="How many actions" secondary={action.acct_num_actions} />
+            <ListItemText primary="How many actions" secondary={numActions} />
           </ListItem>
         </List>
       </Paper>
