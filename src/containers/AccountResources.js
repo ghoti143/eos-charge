@@ -25,10 +25,10 @@ class AccountResources extends Component {
         {store.account &&
           <Grid container className={classes.batteryRoot}>
             <Grid item xs={6}>
-              <Battery type="net" resource={store.account.net_limit} />
+              <Battery type="net" available={store.account.net_limit.available} max={store.account.net_limit.max} />
             </Grid>
             <Grid item xs={6}>
-              <Battery type="cpu" resource={store.account.cpu_limit} />
+              <Battery type="cpu" available={store.account.cpu_limit.available} max={store.account.cpu_limit.max} />
             </Grid>
           </Grid>}
       </React.Fragment>          

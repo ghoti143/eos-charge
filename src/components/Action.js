@@ -11,6 +11,7 @@ import FlashIcon from '@material-ui/icons/FlashOn';
 import CompareIcon from '@material-ui/icons/CompareArrows';
 import withStyles from '@material-ui/core/styles/withStyles'
 import Utils from './Utils'
+import ActionCount from './ActionCount'
 
 const styles = theme => ({
   paper: {
@@ -29,8 +30,7 @@ class Action extends Component {
     const {classes, action, availCpu} = this.props
     const cpu = Utils.formatQuantity(action.avg_cpu_us, 'cpu')
     const net = Utils.formatQuantity(action.avg_net_words, 'words')
-    const numActions = availCpu / action.avg_cpu_us
-
+    
     return (
       <Paper className={classes.paper}>              
         <List>
@@ -62,7 +62,7 @@ class Action extends Component {
             <Avatar>
               <RepeatIcon />
             </Avatar>
-            <ListItemText primary="How many actions" secondary={numActions} />
+            <ActionCount availCpu={availCpu} avgCpu={action.avg_cpu_us} />
           </ListItem>
         </List>
       </Paper>

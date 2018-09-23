@@ -3,7 +3,8 @@ import {observable, action, decorate, computed} from 'mobx'
 class ActionStore {
   actions = []
   isLoaded = false
-  blacklist = ['blocktwitter', 'eosio.token']
+  blacklist = ['foobar']
+  filter = ''
 
   loadActions = name => {
     const cachebust = (new Date()).getTime()
@@ -16,12 +17,27 @@ class ActionStore {
     this.actions = actions.filter(agg => {
       return !this.blacklist.includes(agg._id.acct)
     })
-    this.actions = this.actions.slice().sort((a, b) => { return b.count - a.count })
     this.isLoaded = true;
   }
 
+  setFilter = filter => {
+    this.filter = filter.trim().toLowerCase()
+  }
+
   get sortedList() {
-    return this.actions
+    const actions = this.actions.filter(action => {
+      return this.filter === '' ||
+             action._id.acct.indexOf(this.filter) > -1 || 
+             action._id.name.indexOf(this.filter) > -1
+    })
+
+    actions.sort((a, b) => {
+      const compareAccount = a._id.acct.localeCompare(b._id.acct);
+      const compareAction = a._id.name.localeCompare(b._id.name);
+
+      return compareAccount || compareAction;
+    })
+    return actions
   }
 
   get popularActions() {
@@ -33,9 +49,11 @@ class ActionStore {
 decorate(ActionStore, {
   isLoaded: observable,
   setActions: action,
+  setFilter: action,
   sortedList: computed,
   popularActions: computed,
-  actions: observable
+  actions: observable,
+  filter: observable
 })
 
 const store = new ActionStore()

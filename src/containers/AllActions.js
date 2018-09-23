@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import Action from '../components/Action'
 import Grid from '@material-ui/core/Grid';
+import FormControl from '@material-ui/core/FormControl';
+import SearchInput from './SearchInput';
+import InputLabel from '@material-ui/core/InputLabel';
 import {inject, observer} from 'mobx-react'
 
 class AllActions extends Component {
@@ -12,11 +15,24 @@ class AllActions extends Component {
     console.log("AllActions will rerender")
   }
 
+  handleFilterChange = value => {
+    this.props.actionStore.setFilter(value)
+  }
+
+
   render() {
     const {actionStore, acctStore} = this.props
     
     return (
       <React.Fragment>
+        <FormControl margin="none" required fullWidth>
+          <InputLabel htmlFor="filter">Filter</InputLabel>
+          <SearchInput id="filter" 
+                  value={actionStore.filter}
+                  placeholder="search by account name or action name"
+                  onChange={this.handleFilterChange} />
+        </FormControl>
+
         {actionStore.isLoaded &&
           <Grid container spacing={16}>
             {actionStore.sortedList.map((action, i) => (

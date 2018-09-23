@@ -26,13 +26,6 @@ const styles = theme => ({
 
 class Battery extends Component {
   
-  calculatePercent = resource => {
-    let available = resource.available
-    let max = resource.max
-
-    return Math.round(available / max * 100)
-  }
-  
   createSvgPath = pct => {
     var max = 5.5
     var min = 20.5
@@ -45,14 +38,18 @@ class Battery extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return (nextProps.resource !== this.props.resource)
+    return (
+      nextProps.type !== this.props.type ||
+      nextProps.available !== this.props.available ||
+      nextProps.max !== this.props.max
+    )
   }
 
   render() {
-    const {classes, resource, type} = this.props
-    const pct = this.calculatePercent(resource)
+    const {classes, type, available, max} = this.props
+    const pct = Math.round(available / max * 100)
     const svgPath = this.createSvgPath(pct)
-    const qty = Utils.formatQuantity(resource.available, type)
+    const qty = Utils.formatQuantity(available, type)
 
     let color = pct > 20 ? 'green' : 'red'
     console.log('battery rendering')
