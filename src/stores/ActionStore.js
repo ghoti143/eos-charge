@@ -4,6 +4,23 @@ class ActionStore {
   actions = []
   isLoaded = false
   blacklist = ['foobar']
+  popContent = {
+    'monstereosio:feedpet': {
+      img: 'monster-105.png',
+      title: "MonsterEOS: Feed Pet", 
+      description: 'Using your <strong>$AVAIL_CPU</strong> worth of CPU, you are able to feed your pet <strong>$COUNT</strong> times in the next 72 hours.'
+    },
+    'eosbetdice11:resolvebet': {
+      img: 'eosbet-logo-textside-azure.png',
+      title: "EOSBET: Resolve Bet", 
+      description: 'Using your <strong>$AVAIL_CPU</strong> worth of CPU, you are able to resolve <strong>$COUNT</strong> bets in the next 72 hours.'
+    },
+    'eosknightsio:sellmat': {
+      img: 'knights.jpg',
+      title: "EOS Knights: Sell Material", 
+      description: 'Using your <strong>$AVAIL_CPU</strong> worth of CPU, you are able to sell <strong>$COUNT</strong> materials in the next 72 hours.'
+    }
+  }
   filter = ''
 
   loadActions = name => {
@@ -41,7 +58,15 @@ class ActionStore {
   }
 
   get popularActions() {
-    const popularActions = this.actions.slice(0, 3)
+    const actions = this.actions.filter(action => {
+      return `${action._id.acct}:${action._id.name}` in this.popContent
+    })
+
+    const popularActions = actions.map(action => {
+      const popContent = this.popContent[`${action._id.acct}:${action._id.name}`]
+      return {...action, ...popContent}
+    })
+
     return popularActions
   }
 }

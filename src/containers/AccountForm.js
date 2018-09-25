@@ -51,7 +51,7 @@ class AccountForm extends Component {
     console.log("Account will rerender")
   }
 
-  handleAcctNameChange = name => e => {
+  handleAcctNameChange = e => {
     this.props.store.setAccountName(e.target.value)
   }
 
@@ -69,7 +69,7 @@ class AccountForm extends Component {
                       value={store.accountName}
                       placeholder="Ex: eosnewyorkio" 
                       autoFocus 
-                      onChange={this.handleAcctNameChange()} />
+                      onChange={this.handleAcctNameChange} />
             </FormControl>
             <div className={classes.buttonWrapper}>
               <Button variant="fab" 

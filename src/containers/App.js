@@ -24,6 +24,9 @@ const styles = theme => ({
   },
   gridWrapper: {
     padding: 16
+  },
+  popActions: {
+    marginTop: theme.spacing.unit * 2
   }
 });
 

@@ -1,18 +1,12 @@
 import React, {Component} from 'react'
 import {inject, observer} from 'mobx-react'
 import withStyles from '@material-ui/core/styles/withStyles'
-import {Paper} from '@material-ui/core'
+import Grid from '@material-ui/core/Grid';
+import PopularAction from '../components/PopularAction'
 
 const styles = theme => ({
-  paper: {
-    padding: theme.spacing.unit * 2,
-    //marginRight: theme.spacing.unit * 2,
-    //marginLeft: theme.spacing.unit * 2,
-    marginTop: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 2,
-    [theme.breakpoints.up('md')]: {
-      //marginLeft: 0,
-    }
+  container: {
+    marginTop: theme.spacing.unit
   }
 })
 
@@ -22,16 +16,19 @@ class PopularActions extends Component {
   }
 
   render() {
-    const {classes, actionStore} = this.props
+    const {classes, actionStore, acctStore} = this.props
 
     return (
       <React.Fragment>
         {actionStore.isLoaded &&
-          <React.Fragment>
-            {actionStore.popularActions.map((action, i) => (
-              <Paper key={i} className={classes.paper}>Item {i}</Paper>
-            ))}
-          </React.Fragment>}
+          <Grid container spacing={16} className={classes.container}>
+          {actionStore.popularActions.map((action, i) => (
+            <Grid key={i} item xs={12} sm={4} md={6} lg={4}>
+              <PopularAction action={action} availCpu={acctStore.account.cpu_limit.available} />
+            </Grid>
+          ))}
+          </Grid>
+        }
       </React.Fragment>
     )
   }
