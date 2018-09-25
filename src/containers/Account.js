@@ -7,24 +7,8 @@ import AccountForm from './AccountForm';
 import AccountResources from './AccountResources';
 
 const styles = theme => ({
-  layout: {
-    width: 'auto',
-    
-    [theme.breakpoints.only('sm')]: {
-      width: 500,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
-  },
-  paper: {
-    marginTop: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 3,
-    padding: theme.spacing.unit * 2,
-    [theme.breakpoints.up('md')]: {
-      marginTop: theme.spacing.unit * 2,
-      marginBottom: theme.spacing.unit * 6,
-      padding: theme.spacing.unit * 3,
-    },
+  foo: {
+    height: 200
   }
 })
 
@@ -35,16 +19,12 @@ class Account extends Component {
 
     return (
       <div>
-        <main className={classes.layout}>
-          <Paper className={classes.paper}>
             <Provider store={AccountStore}>
               <AccountForm />
             </Provider>
             <Provider store={AccountStore}>
               <AccountResources />
-            </Provider>
-          </Paper>
-        </main>
+            </Provider>        
       </div>
     )
   }

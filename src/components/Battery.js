@@ -4,17 +4,25 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import Utils from './Utils'
 
 const styles = theme => ({
+  wrapper: {
+    width: 130
+  },
   batteryContainer: {
-    position: 'relative',
-    width: '100%',
+    //position: 'relative',
+    //height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
     textAlign: 'center'
   },
   graphic: {
+    //height: '100%'
     width: '100%'
   },
   pctLabel: {
-    position: 'absolute',
-    top: '40%',
+    //position: 'absolute',
+    //top: '40%',
     width: '100%',
     color: 'white',
     textShadow: '1px 1px 5px rgba(0, 0, 0, 0.5)',
@@ -54,8 +62,8 @@ class Battery extends Component {
     let color = pct > 20 ? 'green' : 'red'
     console.log('battery rendering')
     return ( 
-      <React.Fragment>
-        <Typography variant="headline" align="center">{this.props.type.toUpperCase()}</Typography>
+      <div className={classes.wrapper}>
+        <Typography variant="title" align="center">{this.props.type.toUpperCase()}</Typography>
         <div className={classes.batteryContainer} align="center">
           <svg focusable="false" viewBox="0 0 24 24" className={classes.graphic}>
             <path fillOpacity="0.3" d="M17 5.33C17 4.6 16.4 4 15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33V20.5h10V5.33z"></path>
@@ -65,8 +73,8 @@ class Battery extends Component {
           
           <Typography className={classes.pctLabel} variant="display1" align="center">{`${pct}%`}</Typography>
         </div>
-        <Typography variant="subheading" align="center">{`${qty}`}</Typography>
-      </React.Fragment>
+        <Typography variant="body1" align="center">{`${qty}`}</Typography>
+      </div>
     )
   }
 }

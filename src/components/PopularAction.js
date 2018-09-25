@@ -7,52 +7,76 @@ import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Utils from './Utils'
+import Badge from '@material-ui/core/Badge'
 
-const styles = {
+const styles = theme => ({
   card: {
-    //minWidth: 250,
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
   },
-  media: {
-    // ⚠️ object-fit is not supported by IE11.
-    objectFit: 'scale-down',
+  cardMedia: {
+    objectFit: 'scale-down'
   },
-}
+  cardContent: {
+    flexGrow: 1,
+  },
+  badgeRoot: {
+    height: '100%'
+  },
+  badge: {
+    height: theme.spacing.unit * 5,
+    width: theme.spacing.unit * 5,
+    marginTop: -10,
+    marginRight: -10,
+    fontSize: '1rem'
+  }
+})
 
 class PopularAction extends Component {
 
-  createMarkup(action, availCpu) {
-    const count = Utils.computeCount(availCpu, action.avg_cpu_us)
-    const cpu = Utils.formatQuantity(availCpu, 'cpu')
 
+
+  createMarkup(cpu, count, action) {
     const html = action.description.replace('$AVAIL_CPU', cpu).replace('$COUNT', count)
     return {__html: html};
   }
 
   render() {
     const {classes, action, availCpu} = this.props
-    
+    const count = Utils.computeCount(availCpu, action.avg_cpu_us)
+    const cpu = Utils.formatQuantity(availCpu, 'cpu')
+
     return (
+      <Badge classes={{root: classes.badgeRoot, badge: classes.badge}} badgeContent={count} color="primary">
       <Card className={classes.card}>
         <CardMedia
+          className={classes.cardMedia}
           component="img"
-          className={classes.media}
-          height="140"
           image={`./images/${action.img}`}
-          title={action.title}
+          height="140"
+          title="Image title"
         />
-        <CardContent>
-          <Typography gutterBottom variant="headline" component="h2">
+        <CardContent className={classes.cardContent}>
+          <Typography variant="title">
             {action.title}
           </Typography>
-          <Typography component="p" dangerouslySetInnerHTML={this.createMarkup(action, availCpu)}>
+          <Typography gutterBottom variant="subheading">
+            {action.subtitle}
+          </Typography>
+          <Typography component="p" dangerouslySetInnerHTML={this.createMarkup(cpu, count, action)}>
           </Typography>
         </CardContent>
-      <CardActions>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
-    </Card>
+        <CardActions>
+          <Button size="small" color="primary">
+            View
+          </Button>
+          <Button size="small" color="primary">
+            Edit
+          </Button>
+        </CardActions>
+      </Card>
+      </Badge>
     )
   }
 }

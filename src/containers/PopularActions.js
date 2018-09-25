@@ -1,14 +1,7 @@
 import React, {Component} from 'react'
 import {inject, observer} from 'mobx-react'
-import withStyles from '@material-ui/core/styles/withStyles'
 import Grid from '@material-ui/core/Grid';
 import PopularAction from '../components/PopularAction'
-
-const styles = theme => ({
-  container: {
-    marginTop: theme.spacing.unit
-  }
-})
 
 class PopularActions extends Component {
   componentWillReact() {
@@ -16,9 +9,17 @@ class PopularActions extends Component {
   }
 
   render() {
-    const {classes, actionStore, acctStore} = this.props
+    const {actionStore, acctStore} = this.props
 
     return (
+      <Grid container spacing={40}>            
+        {actionStore.popularActions.map((action, i) => (
+          <Grid item key={action.uniqueId} sm={6} md={4} lg={3}>
+            <PopularAction action={action} availCpu={acctStore.account.cpu_limit.available} />
+          </Grid>
+        ))}
+      </Grid>
+      /*
       <React.Fragment>
         {actionStore.isLoaded &&
           <Grid container spacing={16} className={classes.container}>
@@ -30,8 +31,9 @@ class PopularActions extends Component {
           </Grid>
         }
       </React.Fragment>
+      */
     )
   }
 }
 
-export default inject('actionStore', 'acctStore')(withStyles(styles)(observer(PopularActions)))
+export default inject('actionStore', 'acctStore')(observer(PopularActions))

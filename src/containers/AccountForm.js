@@ -75,16 +75,16 @@ class AccountForm extends Component {
               <Button variant="fab" 
                       color="primary" 
                       type="submit" 
-                      disabled={store.state === 'pending' || store.state === 'error'}>
-                {store.state === 'init' || store.state === 'pending' ? <SearchIcon /> :
-                  store.state === 'error' ? <PriorityHighIcon /> :                     
+                      disabled={['pending', 'error'].includes(store.state)}>
+                {['pending', 'init'].includes(store.state) ? <SearchIcon /> :
+                  ['error'].includes(store.state) ? <PriorityHighIcon /> :                     
                   <CheckIcon />}
               </Button>
-              {store.state === 'pending' &&
+              {['pending'].includes(store.state) &&
                 <CircularProgress size={68} className={classes.buttonProgress} />}
             </div>
           </div>
-          {store.state === 'error' && 
+          {['error'].includes(store.state) && 
               <FormLabel error={true}>{store.error.message}</FormLabel>}
         </form>
       </React.Fragment>

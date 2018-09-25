@@ -7,18 +7,27 @@ class ActionStore {
   popContent = {
     'monstereosio:feedpet': {
       img: 'monster-105.png',
-      title: "MonsterEOS: Feed Pet", 
+      title: 'MonsterEOS', 
+      subtitle: 'Feed Pet',
       description: 'Using your <strong>$AVAIL_CPU</strong> worth of CPU, you are able to feed your pet <strong>$COUNT</strong> times in the next 72 hours.'
     },
     'eosbetdice11:resolvebet': {
       img: 'eosbet-logo-textside-azure.png',
-      title: "EOSBET: Resolve Bet", 
+      title: 'EOSBET', 
+      subtitle: 'Resolve Bet',
       description: 'Using your <strong>$AVAIL_CPU</strong> worth of CPU, you are able to resolve <strong>$COUNT</strong> bets in the next 72 hours.'
     },
     'eosknightsio:sellmat': {
-      img: 'knights.jpg',
-      title: "EOS Knights: Sell Material", 
+      img: 'f1.png',
+      title: 'EOS Knights', 
+      subtitle: 'Sell Material',
       description: 'Using your <strong>$AVAIL_CPU</strong> worth of CPU, you are able to sell <strong>$COUNT</strong> materials in the next 72 hours.'
+    },
+    'pandafuncode:pray': {
+      img: 'panda.png',
+      title: 'Panda Fun', 
+      subtitle: 'Pray',
+      description: 'Using your <strong>$AVAIL_CPU</strong> worth of CPU, you are able to pray <strong>$COUNT</strong> times in the next 72 hours.'
     }
   }
   filter = ''
@@ -33,6 +42,9 @@ class ActionStore {
   setActions = actions => {
     this.actions = actions.filter(agg => {
       return !this.blacklist.includes(agg._id.acct)
+    }).map(action => {
+      const additionalProps = {'uniqueId': `${action._id.acct}:${action._id.name}` }
+      return {...action, ...additionalProps}
     })
     this.isLoaded = true;
   }
@@ -58,14 +70,15 @@ class ActionStore {
   }
 
   get popularActions() {
-    const actions = this.actions.filter(action => {
-      return `${action._id.acct}:${action._id.name}` in this.popContent
-    })
-
-    const popularActions = actions.map(action => {
-      const popContent = this.popContent[`${action._id.acct}:${action._id.name}`]
+    const popularActions = this.actions.filter(action => {
+      console.log(action)
+      return action.uniqueId in this.popContent
+    }).map(action => {
+      const popContent = this.popContent[action.uniqueId]
       return {...action, ...popContent}
     })
+
+    console.log(popularActions.length)
 
     return popularActions
   }

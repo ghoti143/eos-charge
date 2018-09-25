@@ -3,6 +3,8 @@ import Battery from '../components/Battery'
 import {inject, observer} from 'mobx-react'
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
+import Collapse from '@material-ui/core/Collapse';
+
 
 const styles = theme => ({
   batteryRoot: {
@@ -21,17 +23,16 @@ class AccountResources extends Component {
     const {classes} = this.props
 
     return (
-      <React.Fragment>
-        {store.account &&
-          <Grid container className={classes.batteryRoot}>
-            <Grid item xs={6}>
+      <Collapse in={['done'].includes(store.state)}>        
+          <Grid container className={classes.batteryRoot} spacing={16} justify="center">
+            <Grid item>
               <Battery type="net" available={store.account.net_limit.available} max={store.account.net_limit.max} />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item>
               <Battery type="cpu" available={store.account.cpu_limit.available} max={store.account.cpu_limit.max} />
             </Grid>
-          </Grid>}
-      </React.Fragment>          
+          </Grid>
+      </Collapse>          
     )
   }
 }
