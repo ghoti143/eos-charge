@@ -8,27 +8,27 @@ const styles = theme => ({
     width: 130
   },
   batteryContainer: {
-    //position: 'relative',
+    position: 'relative',
     //height: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
+    display: 'inline-block',
+    //alignItems: 'center',
+    //justifyContent: 'center',
+    //flexDirection: 'column',
     textAlign: 'center'
   },
   graphic: {
     //height: '100%'
-    width: '100%'
+    width: '100%',
+    //position: 'relative'
   },
   pctLabel: {
     //position: 'absolute',
-    //top: '40%',
+    top: '40%',
     width: '100%',
+    position: 'absolute',
     color: 'white',
-    textShadow: '1px 1px 5px rgba(0, 0, 0, 0.5)',
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '1.6rem'
-    }
+    fontSize: '1.3rem',
+    textShadow: '1px 1px 5px rgba(0, 0, 0, 0.5)'
   }
 })
 
@@ -71,7 +71,7 @@ class Battery extends Component {
             <path fill="none" d="M0 0h24v24H0z"></path>            
           </svg>
           
-          <Typography className={classes.pctLabel} variant="display1" align="center">{`${pct}%`}</Typography>
+          <Typography className={classes.pctLabel} variant="body2" align="center">{`${pct}%`}</Typography>
         </div>
         <Typography variant="body1" align="center">{`${qty}`}</Typography>
       </div>

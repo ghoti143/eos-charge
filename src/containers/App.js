@@ -2,19 +2,14 @@ import React, {Component} from 'react'
 import classNames from 'classnames';
 import AppBar from '@material-ui/core/AppBar';
 import Account from './Account'
-import Button from '@material-ui/core/Button';
 import OfflineBoltIcon from '@material-ui/icons/OfflineBolt';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import ActionStore from "../stores/ActionStore";
 import AccountStore from "../stores/AccountStore";
 import PopularActions from './PopularActions'
-import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 
 import {inject, observer, Provider} from 'mobx-react'
 
@@ -52,6 +47,12 @@ const styles = theme => ({
   footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing.unit * 6,
+    textAlign: 'center'
+  },
+  footerLogo: {
+    height: 60,
+    width: 60,
+    marginBottom: theme.spacing.unit * 2
   },
 });
 
@@ -85,27 +86,7 @@ class App extends Component {
               Enter your EOS Address below to recieve a custom report of how many actions you can perform on the EOS Mainnet.
             </Typography>
             <div className={classes.heroButtons}>
-              <Account />
-              {/*
-              <Grid container spacing={16} justify="center">
-                <Grid item>
-                  <FormControl margin="none" required fullWidth>
-                  <InputLabel htmlFor="acct_name">EOS Account Name</InputLabel>
-                  <Input id="acct_name" 
-                          //value={store.accountName}
-                          placeholder="Ex: eosnewyorkio" 
-                          autoFocus 
-                          //onChange={this.handleAcctNameChange} 
-                          />
-                </FormControl>
-                </Grid>
-                <Grid item>
-                  <Button variant="contained" color="primary">
-                    Main call to action
-                  </Button>
-                </Grid>
-              </Grid>
-              */}
+              <Account />              
             </div>
           </div>
         </div>
@@ -118,12 +99,10 @@ class App extends Component {
         </div>
       </main>
       {/* Footer */}
-      <footer className={classes.footer}>
-        <Typography variant="title" align="center" gutterBottom>
-          Footer
-        </Typography>
+      <footer className={classes.footer} aligh="center">
+        <img className={classes.footerLogo} src="/images/EOS-NY_logo.svg" align="center" alt="EOS New York logo" />
         <Typography variant="subheading" align="center" color="textSecondary" component="p">
-          Something here to give the footer a purpose!
+          Made with ❤ by <a href="https://www.eosnewyork.io/">EOS New York</a>
         </Typography>
       </footer>
       {/* End footer */}

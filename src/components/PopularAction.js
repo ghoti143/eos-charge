@@ -1,10 +1,8 @@
 import React, {Component} from 'react'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
-import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Utils from './Utils'
 import Badge from '@material-ui/core/Badge'
@@ -67,14 +65,6 @@ class PopularAction extends Component {
           <Typography component="p" dangerouslySetInnerHTML={this.createMarkup(cpu, count, action)}>
           </Typography>
         </CardContent>
-        <CardActions>
-          <Button size="small" color="primary">
-            View
-          </Button>
-          <Button size="small" color="primary">
-            Edit
-          </Button>
-        </CardActions>
       </Card>
       </Badge>
     )
