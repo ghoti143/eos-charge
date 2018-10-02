@@ -4,6 +4,8 @@ class ActionStore {
   actions = []
   isLoaded = false
   blacklist = ['foobar']
+  startIdx = 0
+  pageSize = 20
   popContent = {
     'monstereosio:feedpet': {
       img: 'monster-105.png',
@@ -53,6 +55,14 @@ class ActionStore {
     this.filter = filter.trim().toLowerCase()
   }
 
+  nextPage = () => {
+    this.startIdx += this.pageSize;
+  }
+
+  prevPage = () => {
+    this.startIdx -= this.pageSize
+  }
+
   get sortedList() {
     const actions = this.actions.filter(action => {
       return this.filter === '' ||
@@ -67,6 +77,11 @@ class ActionStore {
       return compareAccount || compareAction;
     })
     return actions
+  }
+
+  get pagedSortedList() {
+    const endIdx = this.startIdx + this.pageSize
+    return this.sortedList.slice(this.startIdx, endIdx)
   }
 
   get popularActions() {
@@ -89,9 +104,14 @@ decorate(ActionStore, {
   setActions: action,
   setFilter: action,
   sortedList: computed,
+  pagedSortedList: computed,
   popularActions: computed,
   actions: observable,
-  filter: observable
+  filter: observable,
+  startIdx: observable,
+  pageSize: observable,
+  nextPage: action,
+  prevPage: action
 })
 
 const store = new ActionStore()

@@ -43,10 +43,11 @@ class PopularAction extends Component {
   render() {
     const {classes, action, availCpu} = this.props
     const count = Utils.computeCount(availCpu, action.avg_cpu_us)
+    const badgeCount = count > 999 ? "999⁺" : count
     const cpu = Utils.formatQuantity(availCpu, 'cpu')
 
     return (
-      <Badge classes={{root: classes.badgeRoot, badge: classes.badge}} badgeContent={count} color="primary">
+      <Badge classes={{root: classes.badgeRoot, badge: classes.badge}} badgeContent={badgeCount} color="primary">
       <Card className={classes.card}>
         <CardMedia
           className={classes.cardMedia}

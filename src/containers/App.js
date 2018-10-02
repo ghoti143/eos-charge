@@ -1,16 +1,16 @@
 import React, {Component} from 'react'
-import classNames from 'classnames';
-import AppBar from '@material-ui/core/AppBar';
+import classNames from 'classnames'
+import AppBar from '@material-ui/core/AppBar'
 import Account from './Account'
-import OfflineBoltIcon from '@material-ui/icons/OfflineBolt';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import ActionStore from "../stores/ActionStore";
-import AccountStore from "../stores/AccountStore";
+import OfflineBoltIcon from '@material-ui/icons/OfflineBolt'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import withStyles from '@material-ui/core/styles/withStyles'
+import ActionStore from "../stores/ActionStore"
+import AccountStore from "../stores/AccountStore"
 import PopularActions from './PopularActions'
-
+import AllActions from './AllActions'
 import {inject, observer, Provider} from 'mobx-react'
 
 const styles = theme => ({
@@ -54,7 +54,7 @@ const styles = theme => ({
     width: 60,
     marginBottom: theme.spacing.unit * 2
   },
-});
+})
 
 class App extends Component {
   componentDidMount() {
@@ -95,14 +95,17 @@ class App extends Component {
           <Provider actionStore={ActionStore} acctStore={AccountStore}>
             <PopularActions />
           </Provider>
+          <Provider actionStore={ActionStore} acctStore={AccountStore}>
+            <AllActions />
+          </Provider>
           
         </div>
       </main>
       {/* Footer */}
       <footer className={classes.footer} aligh="center">
-        <img className={classes.footerLogo} src="/images/EOS-NY_logo.svg" align="center" alt="EOS New York logo" />
+        <img className={classes.footerLogo} src="./images/EOS-NY_logo.svg" align="center" alt="EOS New York logo" />
         <Typography variant="subheading" align="center" color="textSecondary" component="p">
-          Made with ❤ by <a href="https://www.eosnewyork.io/">EOS New York</a>
+          Made with <span role="img" aria-label="heart" aria-labelledby="heart">❤️</span> by <a href="https://www.eosnewyork.io/">EOS New York</a>
         </Typography>
       </footer>
       {/* End footer */}

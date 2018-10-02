@@ -19,19 +19,6 @@ class PopularActions extends Component {
           </Grid>
         ))}
       </Grid>
-      /*
-      <React.Fragment>
-        {actionStore.isLoaded &&
-          <Grid container spacing={16} className={classes.container}>
-          {actionStore.popularActions.map((action, i) => (
-            <Grid key={i} item xs={12} sm={4} md={6} lg={4}>
-              <PopularAction action={action} availCpu={acctStore.account.cpu_limit.available} />
-            </Grid>
-          ))}
-          </Grid>
-        }
-      </React.Fragment>
-      */
     )
   }
 }
