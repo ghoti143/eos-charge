@@ -1,71 +1,88 @@
 import React, {Component} from 'react'
-import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
-import RepeatIcon from '@material-ui/icons/Repeat';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import MessageIcon from '@material-ui/icons/Message';
-import FlashIcon from '@material-ui/icons/FlashOn';
-import CompareIcon from '@material-ui/icons/CompareArrows';
 import withStyles from '@material-ui/core/styles/withStyles'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import FlashOnIcon from '@material-ui/icons/FlashOn'
+import SdStorage from '@material-ui/icons/SdStorage'
+import Typography from '@material-ui/core/Typography'
 import Utils from './Utils'
-import ActionCount from './ActionCount'
+import Badge from '@material-ui/core/Badge'
+import CardActions from '@material-ui/core/CardActions'
 
 const styles = theme => ({
-  paper: {
-    maxWidth: 320,
-    overflow: 'hidden'
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: theme.palette.background.default,
+  },
+  cardMedia: {
+    objectFit: 'scale-down'
+  },
+  cardContent: {
+    flexGrow: 1,
+  },
+  badgeRoot: {
+    height: '100%'
+  },
+  badge: {
+    height: theme.spacing.unit * 5,
+    width: theme.spacing.unit * 5,
+    marginTop: -10,
+    marginRight: -10,
+    fontSize: '1rem'
+  },
+  actions: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  stat: {
+    display: 'flex'
   }
 })
 
+const desc = 'Using your <strong>$AVAIL_CPU</strong> worth of CPU, you are able to perform this action <strong>$COUNT</strong> times in the next 72 hours.'
+
 class Action extends Component {
-  shouldComponentUpdate(nextProps) {
-    return (nextProps.action !== this.props.action || 
-            nextProps.availCpu !== this.props.availCpu)
-  }
 
   render() {
     const {classes, action, availCpu} = this.props
-    const cpu = Utils.formatQuantity(action.avg_cpu_us, 'cpu')
-    const net = Utils.formatQuantity(action.avg_net_words, 'words')
+    const count = Utils.computeCount(availCpu, action.avg_cpu_us)
+    const badgeCount = count > 999 ? "999⁺" : count
+    const cpu = Utils.formatQuantity(availCpu, 'cpu')
+    const avgCpu = Utils.formatQuantity(action.avg_cpu_us, 'cpu')
+    const avgNet = Utils.formatQuantity(action.avg_net_words, 'words')
     
+
     return (
-      <Paper className={classes.paper}>              
-        <List>
-          <ListItem>
-            <Avatar>
-              <AccountCircleIcon />
-            </Avatar>
-            <ListItemText primary="Account" secondary={action._id.acct} />
-          </ListItem>
-          <ListItem>
-            <Avatar>
-              <MessageIcon />
-            </Avatar>
-            <ListItemText primary="Name" secondary={action._id.name} />
-          </ListItem>
-          <ListItem>
-            <Avatar>
-              <FlashIcon />
-            </Avatar>
-            <ListItemText primary="Avg CPU" secondary={cpu} />
-          </ListItem>
-          <ListItem>
-            <Avatar>
-              <CompareIcon />
-            </Avatar>
-            <ListItemText primary="Avg NET" secondary={net} />
-          </ListItem>
-          <ListItem>
-            <Avatar>
-              <RepeatIcon />
-            </Avatar>
-            <ActionCount availCpu={availCpu} avgCpu={action.avg_cpu_us} />
-          </ListItem>
-        </List>
-      </Paper>
+      <Badge classes={{root: classes.badgeRoot, badge: classes.badge}} badgeContent={badgeCount} color="primary">
+      <Card className={classes.card}>
+        <CardContent className={classes.cardContent}>
+          <Typography variant="title">
+            {action._id.acct}
+          </Typography>
+          <Typography gutterBottom variant="subheading">
+            {action._id.name}
+          </Typography>
+          <Typography component="p" dangerouslySetInnerHTML={Utils.createMarkup(cpu, count, desc)}>
+          </Typography>
+        </CardContent>
+        <CardActions className={classes.actions} disableActionSpacing>
+          <div className={classes.stat}>
+            <FlashOnIcon />
+            <Typography component="p">
+              {avgCpu}
+            </Typography>
+          </div>
+          <div className={classes.stat}>
+            <SdStorage />
+            <Typography component="p">
+              {avgNet}
+            </Typography>
+          </div>
+        </CardActions>
+      </Card>
+      </Badge>
     )
   }
 }

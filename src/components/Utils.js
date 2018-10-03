@@ -6,7 +6,7 @@ class Utils {
 
   formatQuantity = (resource, type) => {
     if(type === 'cpu') {
-      return resource.toLocaleString() + ' µs'
+      return Math.round(resource).toLocaleString() + ' µs'
     } 
     else if(type === 'net') {
       return Math.round(resource / 1024).toLocaleString() + ' KiB'
@@ -14,6 +14,11 @@ class Utils {
     else if(type === 'words') {
       return Math.round(resource / 8).toLocaleString() + ' Bytes'
     }
+  }
+
+  createMarkup = (cpu, count, desc) => {
+    const html = desc.replace('$AVAIL_CPU', cpu).replace('$COUNT', count)
+    return {__html: html};
   }
 }
 

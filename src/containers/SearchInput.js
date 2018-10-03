@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Input from '@material-ui/core/Input';
 
-const WAIT_INTERVAL = 1000;
+const WAIT_INTERVAL = 500;
 const ENTER_KEY = 13;
 
 export default class SearchInput extends Component {

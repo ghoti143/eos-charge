@@ -33,13 +33,6 @@ const styles = theme => ({
 
 class PopularAction extends Component {
 
-
-
-  createMarkup(cpu, count, action) {
-    const html = action.description.replace('$AVAIL_CPU', cpu).replace('$COUNT', count)
-    return {__html: html};
-  }
-
   render() {
     const {classes, action, availCpu} = this.props
     const count = Utils.computeCount(availCpu, action.avg_cpu_us)
@@ -63,7 +56,7 @@ class PopularAction extends Component {
           <Typography gutterBottom variant="subheading">
             {action.subtitle}
           </Typography>
-          <Typography component="p" dangerouslySetInnerHTML={this.createMarkup(cpu, count, action)}>
+          <Typography component="p" dangerouslySetInnerHTML={Utils.createMarkup(cpu, count, action.description)}>
           </Typography>
         </CardContent>
       </Card>

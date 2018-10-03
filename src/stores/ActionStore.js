@@ -19,7 +19,7 @@ class ActionStore {
       subtitle: 'Resolve Bet',
       description: 'Using your <strong>$AVAIL_CPU</strong> worth of CPU, you are able to resolve <strong>$COUNT</strong> bets in the next 72 hours.'
     },
-    'eosknightsio:sellmat': {
+    'eosknightsio:sellmat2': {
       img: 'f1.png',
       title: 'EOS Knights', 
       subtitle: 'Sell Material',
@@ -53,6 +53,7 @@ class ActionStore {
 
   setFilter = filter => {
     this.filter = filter.trim().toLowerCase()
+    this.startIdx = 0
   }
 
   nextPage = () => {
@@ -61,6 +62,18 @@ class ActionStore {
 
   prevPage = () => {
     this.startIdx -= this.pageSize
+  }
+
+  get pagedSortedList() {
+    const endIdx = this.startIdx + this.pageSize
+    return this.sortedList.slice(this.startIdx, endIdx)
+  }
+
+  get endIdx() {
+    let endIdx = this.startIdx + this.pageSize
+    const sortedList = this.sortedList
+    endIdx = endIdx > sortedList.length ? sortedList.length : endIdx
+    return endIdx
   }
 
   get sortedList() {
@@ -77,11 +90,6 @@ class ActionStore {
       return compareAccount || compareAction;
     })
     return actions
-  }
-
-  get pagedSortedList() {
-    const endIdx = this.startIdx + this.pageSize
-    return this.sortedList.slice(this.startIdx, endIdx)
   }
 
   get popularActions() {
@@ -109,6 +117,7 @@ decorate(ActionStore, {
   actions: observable,
   filter: observable,
   startIdx: observable,
+  endIdx: computed,
   pageSize: observable,
   nextPage: action,
   prevPage: action

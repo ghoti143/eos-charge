@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import classNames from 'classnames'
 import AppBar from '@material-ui/core/AppBar'
 import Account from './Account'
-import OfflineBoltIcon from '@material-ui/icons/OfflineBolt'
+import FlashOnIcon from '@material-ui/icons/FlashOn'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -11,6 +11,7 @@ import ActionStore from "../stores/ActionStore"
 import AccountStore from "../stores/AccountStore"
 import PopularActions from './PopularActions'
 import AllActions from './AllActions'
+import AllActionsForm from './AllActionsForm'
 import {inject, observer, Provider} from 'mobx-react'
 
 const styles = theme => ({
@@ -41,11 +42,13 @@ const styles = theme => ({
       marginRight: 'auto',
     },
   },
-  cardGrid: {
+  popularCardGrid: {
     padding: `${theme.spacing.unit * 8}px 0`,
   },
+  allCardGrid: {
+    padding: `${theme.spacing.unit * 4}px 0`,
+  },
   footer: {
-    backgroundColor: theme.palette.background.paper,
     padding: theme.spacing.unit * 6,
     textAlign: 'center'
   },
@@ -69,7 +72,7 @@ class App extends Component {
       <CssBaseline />
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-          <OfflineBoltIcon className={classes.icon} />
+          <FlashOnIcon className={classes.icon} />
           <Typography variant="title" color="inherit" noWrap>
             EOS Charge
           </Typography>
@@ -83,29 +86,37 @@ class App extends Component {
               Check Your Charge
             </Typography>
             <Typography variant="title" align="center" color="textSecondary" paragraph>
-              Enter your EOS Address below to recieve a custom report of how many actions you can perform on the EOS Mainnet.
+              Enter your EOS Account below to recieve a custom report of how many actions you can perform on the EOS Mainnet.
             </Typography>
             <div className={classes.heroButtons}>
               <Account />              
             </div>
           </div>
         </div>
-        <div className={classNames(classes.layout, classes.cardGrid)}>
-          {/* End hero unit */}
+        <div className={classNames(classes.layout, classes.popularCardGrid)}>
           <Provider actionStore={ActionStore} acctStore={AccountStore}>
             <PopularActions />
           </Provider>
-          <Provider actionStore={ActionStore} acctStore={AccountStore}>
-            <AllActions />
-          </Provider>
-          
+        </div>
+        
+        <div className={classes.heroUnit}>
+          <div className={classes.heroContent}>
+            <Provider actionStore={ActionStore}>
+              <AllActionsForm />
+            </Provider>  
+          </div>
+          <div className={classNames(classes.layout, classes.allCardGrid)}>
+            <Provider actionStore={ActionStore} acctStore={AccountStore}>
+              <AllActions />
+            </Provider>
+          </div>
         </div>
       </main>
       {/* Footer */}
       <footer className={classes.footer} aligh="center">
         <img className={classes.footerLogo} src="./images/EOS-NY_logo.svg" align="center" alt="EOS New York logo" />
-        <Typography variant="subheading" align="center" color="textSecondary" component="p">
-          Made with <span role="img" aria-label="heart" aria-labelledby="heart">❤️</span> by <a href="https://www.eosnewyork.io/">EOS New York</a>
+        <Typography variant="subheading" align="center" color="textSecondary">
+          Made with <span role="img" aria-label="heart" aria-labelledby="heart">❤️</span> by <a target="_blank" rel="noopener noreferrer" href="https://www.eosnewyork.io/">EOS New York</a>
         </Typography>
       </footer>
       {/* End footer */}
